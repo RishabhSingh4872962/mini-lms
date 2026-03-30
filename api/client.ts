@@ -1,14 +1,14 @@
 import {
-    API_BASE_URL,
-    API_MAX_RETRIES,
-    API_TIMEOUT,
-    ENDPOINTS,
+  API_BASE_URL,
+  API_MAX_RETRIES,
+  API_TIMEOUT,
+  ENDPOINTS,
 } from "@/constants/api";
 import { tokenStorage } from "@/lib/secureStore";
 import axios, {
-    AxiosError,
-    AxiosInstance,
-    InternalAxiosRequestConfig,
+  AxiosError,
+  AxiosInstance,
+  InternalAxiosRequestConfig,
 } from "axios";
 
 // Augment config to support retry tracking
@@ -115,3 +115,50 @@ apiClient.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+// Human-readable error extraction used across the app
+export function parseApiError(error: unknown): string {
+  if (!error || typeof error !== "object")
+    return "An unexpected error occurred.";
+
+  // Axios error with response
+  if ("response" in error) {
+    const res = (
+      error as { response?: { status?: number; data?: { message?: string } } }
+    ).response;
+    if (!res) return "No response from server. Check your connection.";
+
+    const msg = res.data?.message;
+    switch (res.status) {
+      case 400:
+        return msg ?? "Invalid request.";
+      case 401:
+        return "Session expired. Please sign in again.";
+      case 403:
+        return "You don't have permission to do that.";
+      case 404:
+        return msg ?? "Resource not found.";
+      case 409:
+        return msg ?? "Conflict. This may already exist.";
+      case 422:
+        return msg ?? "Validation error.";
+      case 429:
+        return "Too many requests. Please slow down.";
+      case 500:
+        return "Server error. Try again later.";
+      default:
+        return msg ?? `Error ${res.status}. Please try again.`;
+    }
+  }
+
+  // Network-level error (no response)
+  if ("code" in error) {
+    const code = (error as { code: string }).code;
+    if (code === "ECONNABORTED")
+      return "Request timed out. Check your connection.";
+    if (code === "ERR_NETWORK") return "Network error. You may be offline.";
+  }
+
+  if ("message" in error) return String((error as { message: string }).message);
+  return "An unexpected error occurred.";
+}
