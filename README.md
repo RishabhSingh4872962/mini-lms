@@ -26,17 +26,27 @@ A production-ready **Learning Management System** built with React Native Expo, 
 
 ## Screenshots
 
-| Login                      | Register                     | Home                       |
-| -------------------------- | ---------------------------- | -------------------------- |
-| Auth screen with demo hint | Registration with validation | Course catalog with search |
+### Authentication & Home
 
-| Course Detail     | WebView Content         | Bookmarks     |
-| ----------------- | ----------------------- | ------------- |
-| Enroll + bookmark | Interactive HTML course | Saved courses |
+| Login                      | Register                      | Home                      |
+| -------------------------- | ----------------------------- | ------------------------- |
+| ![](screenshots/login.png) | ![](screenshots/register.png) | ![](screenshots/home.png) |
 
-| Search                    | Profile              | Offline                 |
-| ------------------------- | -------------------- | ----------------------- |
-| Filter + sort + highlight | Stats + account menu | Animated offline banner |
+---
+
+### Course Experience
+
+| Course Detail                      | WebView Content              | Bookmarks                      |
+| ---------------------------------- | ---------------------------- | ------------------------------ |
+| ![](screenshots/course-detail.png) | ![](screenshots/webview.png) | ![](screenshots/bookmarks.png) |
+
+---
+
+### Discovery & Profile
+
+| Search                             | Profile                             | Offline                             |
+| ---------------------------------- | ----------------------------------- | ----------------------------------- |
+| ![](assets/screenshots/search.png) | ![](assets/screenshots/profile.png) | ![](assets/screenshots/offline.png) |
 
 ---
 
