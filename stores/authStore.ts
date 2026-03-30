@@ -49,13 +49,11 @@ export const useAuthStore = create<AuthState>()(
       login: async (credentials) => {
         set({ isLoading: true, error: null });
         try {
-          console.log("lmlm", credentials);
           const response = await authApi.login(credentials);
           const { user, accessToken, refreshToken } = response.data;
           await tokenStorage.setTokens(accessToken, refreshToken);
           set({ user, isAuthenticated: true, isLoading: false });
         } catch (error) {
-          console.log("err==========> ", error);
           set({
             error: extractErrorMessage(
               error,

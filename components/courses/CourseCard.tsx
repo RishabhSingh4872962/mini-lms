@@ -29,7 +29,6 @@ export const CourseCard = memo(function CourseCard({
   const instructorName = `${course.instructor.name.first} ${course.instructor.name.last}`;
   const levelStyle = LEVEL_COLORS[course.level] ?? LEVEL_COLORS.Beginner;
 
-  console.log(course.thumbnail);
   return (
     <Pressable
       onPress={() => router.push(`/course/${course.id}`)}

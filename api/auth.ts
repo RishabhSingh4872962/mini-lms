@@ -1,9 +1,9 @@
 import { ENDPOINTS } from "@/constants/api";
 import type {
-    AuthResponse,
-    LoginRequest,
-    RegisterRequest,
-    User,
+  AuthResponse,
+  LoginRequest,
+  RegisterRequest,
+  User,
 } from "@/types/auth.types";
 import { apiClient } from "./client";
 
@@ -26,7 +26,6 @@ export const authApi = {
         role: "USER",
       },
     );
-    console.log(",l,,;,;,;,", data);
     return data;
   },
 
