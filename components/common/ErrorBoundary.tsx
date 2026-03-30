@@ -26,7 +26,7 @@ export class ErrorBoundary extends Component<Props, State> {
   componentDidCatch(error: Error, info: ErrorInfo) {
     this.props.onError?.(error, info);
     // In production you'd send this to Sentry / Crashlytics
-    console.error("[ErrorBoundary]", error.message, info.componentStack);
+    // console.error("[ErrorBoundary]", error.message, info.componentStack);
   }
 
   handleReset = () => {
