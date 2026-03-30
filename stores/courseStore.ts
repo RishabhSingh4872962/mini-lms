@@ -1,7 +1,7 @@
 import { coursesApi } from "@/api/courses";
 import {
-    scheduleBookmarkMilestoneNotification,
-    scheduleReminderNotification
+  scheduleBookmarkMilestoneNotification,
+  scheduleReminderNotification,
 } from "@/lib/notifications";
 import type { Course, RawProduct, RawUser } from "@/types/course.types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -19,6 +19,23 @@ const DURATIONS = [
   "3h 50m",
 ];
 
+const COURSE_IMAGES: string[] = [
+  "https://img-c.udemycdn.com/course/750x422/1565838_e54e_16.jpg",
+  "https://img-c.udemycdn.com/course/750x422/950390_270f_3.jpg",
+  "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://images.coursera.org/CS50x.jpg",
+  "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://images.coursera.org/python.jpg",
+  "https://miro.medium.com/v2/resize:fit:1200/1*eKZ8Zr1v8Rk8zqRLVQjaxA.png",
+  "https://cdn.fs.teachablecdn.com/4Rk2X6vR3KpW5Xx8c2bA",
+  "https://cdn.educba.com/academy/wp-content/uploads/2019/03/Data-Science-Course.jpg",
+  "https://cdn.udacity.com/course-catalog-images/nd001.jpg",
+  "https://cdn.udacity.com/course-catalog-images/nd0044.jpg",
+  "https://pluralsight.imgix.net/paths/path-icons/react-17a7fdf8a9.png",
+];
+
+function getCourseImage(id: number): string {
+  return COURSE_IMAGES[id % COURSE_IMAGES.length];
+}
+
 function syntheticCourseData(id: number) {
   return {
     rating: Number((3.5 + (id % 15) * 0.1).toFixed(1)),
@@ -35,6 +52,7 @@ function mergeCourses(products: RawProduct[], users: RawUser[]): Course[] {
     const user = users[index % users.length];
     return {
       ...product,
+      thumbnail: getCourseImage(index),
       instructor: {
         id: user.id,
         name: user.name,
