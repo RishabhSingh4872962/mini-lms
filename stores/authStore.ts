@@ -39,7 +39,7 @@ const extractErrorMessage = (error: unknown, fallback: string): string => {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       isAuthenticated: false,
       isLoading: false,
@@ -69,8 +69,12 @@ export const useAuthStore = create<AuthState>()(
         set({ isLoading: true, error: null });
         try {
           const response = await authApi.register(payload);
-          const { user, accessToken, refreshToken } = response.data;
-          await tokenStorage.setTokens(accessToken, refreshToken);
+          const { user } = response.data;
+
+          get().login({
+            username: payload.username,
+            password: payload.password,
+          });
           set({ user, isAuthenticated: true, isLoading: false });
         } catch (error) {
           set({

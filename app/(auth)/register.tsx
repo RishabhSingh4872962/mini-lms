@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
@@ -20,7 +20,10 @@ import { registerSchema, type RegisterFormData } from "@/schemas/auth.schema";
 import { useAuthStore } from "@/stores/authStore";
 
 export default function RegisterScreen() {
-  const { register, isLoading, error, clearError } = useAuthStore();
+  const { register, isLoading, error, clearError, isAuthenticated } =
+    useAuthStore();
+
+  const router = useRouter();
 
   const {
     control,
@@ -40,6 +43,8 @@ export default function RegisterScreen() {
     try {
       const { confirmPassword: _, ...payload } = data;
       await register(payload);
+
+      isAuthenticated && router.replace("/(tabs)");
     } catch {
       // Error handled by store
     }
